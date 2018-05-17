@@ -79,23 +79,21 @@ class ViewController: UIViewController {
         print(sender.tag)
         sender.backgroundColor = UIColor.red
         print("X:\(sender.frame.origin.x),Y:\(sender.frame.origin.y)")
-        sender.isEnabled = false
+//        sender.isEnabled = false
         let pos = [sender.frame.origin.x,sender.frame.origin.y]
         posArray.append(pos)
         print(posArray)
-        num = num + 1
-        if num % 2 == 0{
-//            mainPosArray.append(posArray)
-//            posArray = []
-//            print(mainPosArray)
-            let uiPath = UIBezierPath()
-            let shapeLayer = CAShapeLayer()
-            uiPath.move(to: CGPoint(x: posArray[0][0] + 15, y: posArray[0][1] + 15))       // ここから
-            uiPath.addLine(to: CGPoint(x: posArray[1][0] + 15, y: posArray[1][1] + 15))  // ここまで線を引く
-            
-            shapeLayer.strokeColor = UIColor.blue.cgColor  // 微妙に分かりにくい。色は要指定。
-            shapeLayer.path = uiPath.cgPath
-            view.layer.addSublayer(shapeLayer)
+        if posArray.count % 2 == 0{
+            let num = posArray.count / 2
+            for i in 1...num{
+                let uiPath = UIBezierPath()
+                let shapeLayer = CAShapeLayer()
+                uiPath.move(to: CGPoint(x: posArray[(i * 2) - 2][0] + 15, y: posArray[(i * 2) - 2][1] + 15))       // ここから
+                uiPath.addLine(to: CGPoint(x: posArray[(i * 2) - 1][0] + 15, y: posArray[(i * 2) - 1][1] + 15))  // ここまで線を引く
+                shapeLayer.strokeColor = UIColor.blue.cgColor  // 微妙に分かりにくい。色は要指定。
+                shapeLayer.path = uiPath.cgPath
+                view.layer.addSublayer(shapeLayer)
+            }
         }
     }
     
