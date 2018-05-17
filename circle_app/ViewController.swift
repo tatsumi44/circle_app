@@ -85,9 +85,17 @@ class ViewController: UIViewController {
         print(posArray)
         num = num + 1
         if num % 2 == 0{
-            mainPosArray.append(posArray)
-            posArray = []
-            print(mainPosArray)
+//            mainPosArray.append(posArray)
+//            posArray = []
+//            print(mainPosArray)
+            let uiPath = UIBezierPath()
+            let shapeLayer = CAShapeLayer()
+            uiPath.move(to: CGPoint(x: posArray[0][0] + 15, y: posArray[0][1] + 15))       // ここから
+            uiPath.addLine(to: CGPoint(x: posArray[1][0] + 15, y: posArray[1][1] + 15))  // ここまで線を引く
+            
+            shapeLayer.strokeColor = UIColor.blue.cgColor  // 微妙に分かりにくい。色は要指定。
+            shapeLayer.path = uiPath.cgPath
+            view.layer.addSublayer(shapeLayer)
         }
     }
     
