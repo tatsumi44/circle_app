@@ -44,19 +44,22 @@ class ViewController: UIViewController {
     @IBAction func decide(_ sender: Any) {
         if textField.text != nil{
             num = Int(textField.text!)
-            for i in 1 ... num{
+            for i in 0 ..< num{
                 let num_arc : Double = Double(360 / num)
                 let θ = Double.pi / Double(180) * Double(num_arc * Double(i))
                 let button = UIButton()
-                button.tag = num
+                button.tag = i
                 button.frame = CGRect(x: CGFloat(Double(self.view.frame.width/2 - 15) + 180 * cos(θ)), y: CGFloat(Double(self.view.frame.height/2 - 15) + 180 * sin(θ)), width: 30, height: 30)
                 print("θ\(θ)")
                 print("X:\(Double(self.view.frame.width/2) + 20 * cos(θ)),Y:\(Double(self.view.frame.height/2) + 20 * sin(θ))")
                 button.backgroundColor = UIColor.blue
+                button.layer.masksToBounds = true
+                button.layer.cornerRadius = 15
                 button.addTarget(self, action: #selector(self.btn_click), for: .touchUpInside)
+                print(i)
                 view.addSubview(button)
-                
             }
+
         }
         
     }
@@ -64,14 +67,14 @@ class ViewController: UIViewController {
     @IBAction func reset(_ sender: Any) {
         textField.text = ""
         for v in view.subviews{
-            if let v = v as? UIButton, v.tag >= 1 && v.tag <= num {
+            if let v = v as? UIButton, v.tag >= 0 && v.tag < num {
                 v.removeFromSuperview()
             }
         }
     }
     
-    @objc func btn_click() {
-        print(num)
+    @objc func btn_click(_ sender: UIButton) {
+        print(sender.tag)
     }
     
 }
