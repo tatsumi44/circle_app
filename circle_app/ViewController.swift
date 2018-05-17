@@ -12,7 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var textField: UITextField!
     var num : Int!
-
+    var posArray = [[CGFloat]]()
+    var mainPosArray = [[[CGFloat]]]()
+    var count :Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,7 +46,7 @@ class ViewController: UIViewController {
     @IBAction func decide(_ sender: Any) {
         if textField.text != nil{
             num = Int(textField.text!)
-            for i in 0 ..< num{
+            for i in 1 ... num{
                 let num_arc : Double = Double(360 / num)
                 let θ = Double.pi / Double(180) * Double(num_arc * Double(i))
                 let button = UIButton()
@@ -67,7 +69,7 @@ class ViewController: UIViewController {
     @IBAction func reset(_ sender: Any) {
         textField.text = ""
         for v in view.subviews{
-            if let v = v as? UIButton, v.tag >= 0 && v.tag < num {
+            if let v = v as? UIButton, v.tag >= 1 && v.tag <= num {
                 v.removeFromSuperview()
             }
         }
@@ -75,6 +77,18 @@ class ViewController: UIViewController {
     
     @objc func btn_click(_ sender: UIButton) {
         print(sender.tag)
+        sender.backgroundColor = UIColor.red
+        print("X:\(sender.frame.origin.x),Y:\(sender.frame.origin.y)")
+        sender.isEnabled = false
+        let pos = [sender.frame.origin.x,sender.frame.origin.y]
+        posArray.append(pos)
+        print(posArray)
+        num = num + 1
+        if num % 2 == 0{
+            mainPosArray.append(posArray)
+            posArray = []
+            print(mainPosArray)
+        }
     }
     
 }
